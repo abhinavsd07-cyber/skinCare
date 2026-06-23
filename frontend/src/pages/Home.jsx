@@ -33,7 +33,7 @@ export function FadeSection({ children, className = "" }) {
 // ── Nav ────────────────────────────────────────────────────────────────────────
 export function Nav() {
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-transparent">
+    <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-12 py-6 bg-transparent">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,10 +46,10 @@ export function Nav() {
       </div>
 
       {/* Center Links */}
-      <ul className="hidden lg:flex items-center gap-8 list-none m-0 p-0 font-medium text-[14px] text-gray-700">
-        {["Explore", "Your Skin", "Transformations", "AI Guidance", "Philosophy"].map((item) => (
+      <ul className="hidden lg:flex items-center gap-8 list-none m-0 p-0 font-medium text-[14px] text-[#334155]">
+        {["Products", "Skin Analysis", "Concerns", "Ingredients", "Results", "Pricing"].map((item) => (
           <li key={item}>
-            <a href="#" className="hover:text-purple-600 transition-colors no-underline text-gray-700">
+            <a href="#" className="hover:text-black transition-colors no-underline">
               {item}
             </a>
           </li>
@@ -57,17 +57,26 @@ export function Nav() {
       </ul>
 
       {/* Right Buttons */}
-      <div className="flex items-center gap-3">
-        <button className="px-5 py-2.5 rounded-xl border border-gray-300 text-[14px] font-medium text-gray-900 hover:bg-gray-50 transition-colors bg-white">
-          Contact Us
-        </button>
-        <button className="px-5 py-2.5 rounded-xl bg-[#1A1A1A] text-white text-[13px] font-medium flex items-center gap-2 hover:bg-black transition-colors leading-tight">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0 mt-0.5">
-            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.33-.85 3.73-.78 1.44.06 2.53.64 3.28 1.6-3.32 1.83-2.67 5.75.52 6.94-1.12 2.05-2.12 3.65-2.61 4.41zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+      <div className="flex items-center gap-4">
+        {/* Account Button */}
+        <button className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-black transition-colors font-medium text-[14px]" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
           </svg>
-          <span>
-            Download on the<br/>
-            <span className="text-[11px] font-semibold">App Store</span>
+          Account
+        </button>
+
+        {/* Cart Button */}
+        <button className="relative flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-black transition-colors font-medium text-[14px]" aria-label="Cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          Cart
+          <span className="absolute top-1 left-5 bg-[#C084FC] text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+            2
           </span>
         </button>
       </div>
@@ -80,26 +89,22 @@ export function Hero() {
   return (
     <section className="relative w-full min-h-screen bg-white overflow-hidden">
 
-      {/* Background: video centered, with strong white fade on left so text stays clean */}
-      <div className="absolute inset-0">
-        {/* White base so anything not covered by video is white */}
-        <div className="absolute inset-0 bg-white" />
-        <video
-          src={girlVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-contain object-center"
-          style={{
-            maskImage: "linear-gradient(to bottom, black 72%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 72%, transparent 100%)"
-          }}
-        />
-        {/* Strong left-side white fade so headline text sits on clean white, not over the face */}
-        <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-white via-white to-transparent" style={{ width: "38%" }} />
-        {/* Right-side gentle fade for stats legibility */}
-        <div className="absolute inset-y-0 right-0 bg-gradient-to-l from-white/75 to-transparent" style={{ width: "26%" }} />
+      {/* Background: Video centered with seamless radial blending to match the original design */}
+      <div className="absolute inset-0 w-full h-full flex justify-center items-center pointer-events-none z-0">
+        <div className="relative w-full max-w-[900px] h-[90vh] max-h-[900px] flex justify-center items-center">
+          <video
+            src={girlVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+            style={{ 
+              maskImage: "radial-gradient(ellipse 65% 85% at 50% 50%, black 40%, transparent 80%)", 
+              WebkitMaskImage: "radial-gradient(ellipse 65% 85% at 50% 50%, black 40%, transparent 80%)" 
+            }}
+          />
+        </div>
       </div>
 
       {/* Content flexbox on top of background */}
@@ -184,69 +189,6 @@ export function Hero() {
   );
 }
 
-// ── AI Skincare Section ────────────────────────────────────────────────────────
-export function AISkincare() {
-  return (
-    <section className="w-full bg-[#F5F5F5] py-8 px-4 md:px-8">
-      <div className="max-w-[1400px] mx-auto bg-white rounded-[2rem] overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-
-        {/* Left Image with dots */}
-        <div className="relative w-full h-[600px] md:h-auto bg-[#EBEBEB]">
-          <img
-            src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=1200"
-            alt="Applying skincare"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute top-[25%] left-[60%] flex flex-col items-center gap-1">
-            <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <span className="text-white text-[9px] tracking-widest font-bold uppercase drop-shadow-md">SLEEP WELL</span>
-          </div>
-          <div className="absolute top-[55%] left-[30%] flex flex-col items-center gap-1">
-            <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <span className="text-white text-[9px] tracking-widest font-bold uppercase drop-shadow-md">HYDRATE</span>
-          </div>
-          <div className="absolute bottom-[20%] right-[35%] flex flex-col items-center gap-1">
-            <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <span className="text-white text-[9px] tracking-widest font-bold uppercase drop-shadow-md">LESS STRESS</span>
-          </div>
-        </div>
-
-        {/* Right Content */}
-        <div className="w-full bg-gradient-to-b from-[#FAF5FF] to-white flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
-          <FadeSection>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
-              AI Skincare
-            </h2>
-            <p className="text-[13px] text-gray-600 max-w-md mx-auto leading-relaxed mb-16">
-              AI doesn't promise perfection — it observes, learns, and adapts.
-              Every scan interprets the natural passage of your skin's time,
-              highlighting areas for thoughtful care and balance.
-            </p>
-          </FadeSection>
-
-          <div className="flex flex-col items-center my-8 opacity-40">
-            <div className="w-px h-32 bg-gradient-to-b from-purple-300 to-purple-600 mb-1"></div>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9333ea" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </div>
-
-          <FadeSection>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 mt-8">
-              Mindful Beauty
-            </h2>
-            <p className="text-[13px] text-gray-500 max-w-sm mx-auto leading-relaxed">
-              Meaning: we can't stop aging, but we can guide it with
-              awareness, insight, and gentle personalization.
-            </p>
-          </FadeSection>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
 // ── Root ───────────────────────────────────────────────────────────────────────
 export default function Home() {
   return (
@@ -254,7 +196,6 @@ export default function Home() {
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       <Nav />
       <Hero />
-      <AISkincare />
     </div>
   );
 }
