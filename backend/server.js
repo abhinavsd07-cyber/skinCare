@@ -19,8 +19,13 @@ app.get('/', (req, res) => {
 });
 
 // Import Routes
-// const productRoutes = require('./src/routes/productRoutes');
-// app.use('/api/products', productRoutes);
+const authRoutes = require('./src/routes/authRoutes');
+const analysisRoutes = require('./src/routes/analysisRoutes');
+const productRoutes = require('./src/routes/productRoutes');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/analysis', analysisRoutes);
+app.use('/api/products', productRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
