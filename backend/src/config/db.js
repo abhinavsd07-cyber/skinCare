@@ -1,3 +1,6 @@
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
 const mongoose = require('mongoose');
 
 let isConnected = false;
@@ -10,10 +13,10 @@ const connectDB = async () => {
 
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 8000,
     });
     isConnected = true;
-    console.log(`✅ MongoDB Connected successfully: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Atlas Connected successfully: ${conn.connection.host}`);
 
     // Check if products collection is empty; if so, auto-seed default products
     try {
@@ -32,7 +35,6 @@ const connectDB = async () => {
     console.warn('⚠️ MongoDB Atlas Connection Notice:');
     console.warn(`   Reason: ${error.message}`);
     console.warn('   The server will continue operating in high-availability mode with built-in catalog data.');
-    console.warn('   (To connect to Atlas, whitelist your current IP address in MongoDB Atlas Network Access)');
   }
 };
 

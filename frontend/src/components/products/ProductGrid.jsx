@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FiltersSidebar from "./FiltersSidebar";
 import ProductCard from "./ProductCard";
@@ -7,6 +8,7 @@ import { ChevronDown, Grid3X3, List, Loader2, PackageOpen } from "lucide-react";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000/api";
 
 export default function ProductGrid() {
+  const navigate = useNavigate();
   const categories = ["All", "CLEANSER", "SERUM", "TONER", "MOISTURIZER", "SUNSCREEN", "TREATMENT", "MASK"];
   const [activeCategory, setActiveCategory] = useState("All");
   const [products, setProducts] = useState([]);
@@ -163,7 +165,10 @@ export default function ProductGrid() {
                     </p>
                   </div>
                 </div>
-                <button className="flex-shrink-0 flex items-center gap-2 px-8 py-4 bg-[#A855F7] hover:bg-[#9333EA] text-white rounded-xl font-bold text-sm shadow-md shadow-purple-500/20 transition-all">
+                <button 
+                  onClick={() => navigate("/analysis")}
+                  className="flex-shrink-0 flex items-center gap-2 px-8 py-4 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-2xl font-bold text-sm shadow-md shadow-purple-500/20 transition-all cursor-pointer"
+                >
                   <span className="text-lg">✨</span>
                   Analyze Your Skin
                 </button>
