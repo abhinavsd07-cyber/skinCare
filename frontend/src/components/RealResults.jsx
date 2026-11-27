@@ -1,187 +1,208 @@
-import { useState, useRef, useEffect } from "react";
-import { Star } from "lucide-react";
+import { useState } from "react";
+import { Star, CheckCircle2, Sparkles, Quote, ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
 
 export default function RealResults() {
-  const [sliderPos, setSliderPos] = useState(50);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const sliderRef = useRef(null);
-  const isDragging = useRef(false);
 
   const testimonials = [
     {
-      quote: "My acne reduced in just 3 weeks. The AI analysis was super accurate!",
-      user: "Sarah J.",
-      role: "Verified User",
+      id: 0,
+      quote: "My stubborn hormonal acne and redness visibly reduced in just 3 weeks. The AI facial scan pinpointed my disrupted barrier immediately, and the customized peptide moisturizer didn't clog my pores at all.",
+      user: "Sarah Jenkins",
+      role: "Verified Patient · Bangalore",
+      concern: "Acne & Redness",
+      metric: "84% blemish reduction in 21 days",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+      routine: "Gentle Cleanser + Barrier Peptide Cream"
     },
     {
-      quote: "The personalized routine completely fixed my dry patches. Highly recommend Nuvé!",
-      user: "Michael D.",
-      role: "Verified Member",
+      id: 1,
+      quote: "I struggled with dry flaky patches and uneven sun spots for years. Following the 7-day AM/PM regimen completely normalized my hydration. My foundation glides on seamlessly now.",
+      user: "Michael D'Souza",
+      role: "Verified Member · Mumbai",
+      concern: "Dryness & Hyperpigmentation",
+      metric: "92% hydration barrier restored",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+      routine: "Hyaluronic Matrix + Ceramide Night Serum"
     },
     {
-      quote: "I was skeptical about AI scanning, but it detected my exact concerns and set a perfect routine.",
-      user: "Elena R.",
-      role: "Verified User",
+      id: 2,
+      quote: "I was skeptical about computer vision skin analysis, but it accurately caught fine lines around my eyes and forehead congestion that standard salon consultations completely missed.",
+      user: "Elena Rodriguez",
+      role: "Verified User · Delhi",
+      concern: "Fine Lines & Enlarged Pores",
+      metric: "72% pore refinement measured",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop",
+      routine: "Niacinamide Elixir + Botanical Night Oil"
     }
   ];
 
-  const handleMove = (clientX) => {
-    if (!sliderRef.current) return;
-    const rect = sliderRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPos(percentage);
+  const current = testimonials[activeTestimonial];
+
+  const nextTestimonial = () => {
+    setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
-  const handleTouchMove = (e) => {
-    if (e.touches && e.touches[0]) {
-      handleMove(e.touches[0].clientX);
-    }
+  const prevTestimonial = () => {
+    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
-
-  const handleMouseMove = (e) => {
-    if (isDragging.current) {
-      handleMove(e.clientX);
-    }
-  };
-
-  useEffect(() => {
-    const handleMouseUp = () => {
-      isDragging.current = false;
-    };
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchend", handleMouseUp);
-    return () => {
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchend", handleMouseUp);
-    };
-  }, []);
 
   return (
-    <section className="w-full bg-white py-24">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+    <section className="w-full bg-[#FAFAFC] py-20 md:py-28 border-t border-gray-100 relative overflow-hidden" id="results">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 right-10 w-[500px] h-[300px] bg-purple-100/40 blur-[130px] rounded-full pointer-events-none -z-10" />
+
+      <div className="max-w-[1360px] mx-auto px-5 sm:px-8">
         
-        {/* Left Column: Title & Before/After Slider */}
-        <div className="lg:col-span-6 flex flex-col items-start w-full">
-          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-gray-500 mb-2">
-            REAL RESULTS
-          </span>
-          <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-gray-900 mb-8 max-w-sm leading-tight">
-            Visible results, real stories
-          </h2>
-
-          {/* Interactive Before/After Image Slider */}
-          <div 
-            ref={sliderRef}
-            onMouseDown={() => { isDragging.current = true; }}
-            onTouchStart={() => { isDragging.current = true; }}
-            onMouseMove={handleMouseMove}
-            onTouchMove={handleTouchMove}
-            className="relative w-full max-w-[500px] aspect-[4/3] rounded-3xl overflow-hidden shadow-md select-none cursor-ew-resize bg-gray-200"
-          >
-            {/* Before image (Background) */}
-            <div className="absolute inset-0 grayscale contrast-[1.05] brightness-90">
-              <img 
-                src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop" 
-                alt="Before" 
-                className="w-full h-full object-cover pointer-events-none"
-              />
-              <span className="absolute bottom-4 left-4 bg-black/60 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-sm z-20">
-                Before
+        {/* Section Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Heading & Clinical Trust Metrics */}
+          <div className="lg:col-span-5 flex flex-col items-start w-full">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200/80 mb-5">
+              <Sparkles className="w-3.5 h-3.5 text-[#9333EA]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7E22CE]">
+                Clinical Proof & Patient Stories
               </span>
             </div>
 
-            {/* After image (Foreground, clipped) */}
-            <div 
-              className="absolute inset-0 z-10" 
-              style={{ clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop" 
-                alt="After" 
-                className="w-full h-full object-cover pointer-events-none"
-              />
-              <span className="absolute bottom-4 right-4 bg-[#C084FC]/90 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-sm z-20">
-                After
-              </span>
-            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 leading-[1.12] mb-5">
+              Real people, <br />measurable results
+            </h2>
 
-            {/* Slide bar */}
-            <div 
-              className="absolute top-0 bottom-0 z-20 w-1 bg-white cursor-ew-resize shadow-[0_0_10px_rgba(0,0,0,0.3)]"
-              style={{ left: `${sliderPos}%` }}
-            >
-              {/* Handle thumb */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white border border-gray-250 flex items-center justify-center shadow-lg pointer-events-none">
-                <span className="flex gap-0.5 text-gray-400">
-                  <span className="w-0.5 h-3 bg-gray-300 rounded-full"></span>
-                  <span className="w-0.5 h-3 bg-gray-300 rounded-full"></span>
+            <p className="text-gray-500 text-sm md:text-base font-normal leading-relaxed mb-8 max-w-md">
+              Over 9,870 patients have achieved calibrated skin barrier restoration using our precision AI-driven formulations.
+            </p>
+
+            {/* Quick Metrics Bento */}
+            <div className="grid grid-cols-2 gap-4 w-full mb-8">
+              <div className="bg-white rounded-2xl p-5 border border-gray-200/80 shadow-xs">
+                <span className="text-2xl sm:text-3xl font-black text-gray-900 block mb-1">
+                  95.8%
+                </span>
+                <span className="text-xs text-gray-500 font-medium leading-snug">
+                  Diagnostic agreement with dermatologists
+                </span>
+              </div>
+              <div className="bg-white rounded-2xl p-5 border border-gray-200/80 shadow-xs">
+                <span className="text-2xl sm:text-3xl font-black text-[#7E22CE] block mb-1">
+                  21 Days
+                </span>
+                <span className="text-xs text-gray-500 font-medium leading-snug">
+                  Average time to visible barrier renewal
                 </span>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Right Column: Interactive Testimonials Card */}
-        <div className="lg:col-span-6 flex flex-col justify-center bg-white border border-gray-100/60 rounded-3xl p-8 md:p-12 shadow-[0_6px_30px_-6px_rgba(0,0,0,0.02)] min-h-[350px]">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6 block">
-            WHAT OUR USERS SAY
-          </span>
-
-          {/* Dynamic Testimonial block */}
-          <div className="flex-grow flex flex-col justify-between">
-            <div>
-              <p className="text-xl md:text-2xl font-light text-gray-800 leading-relaxed italic mb-8">
-                "{testimonials[activeTestimonial].quote}"
-              </p>
-
-              {/* Stars */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
+            {/* Overall Rating Pill */}
+            <div className="flex items-center gap-3 bg-white border border-gray-200/80 rounded-2xl px-5 py-3 shadow-xs">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 stroke-none" />
                 ))}
               </div>
+              <span className="text-xs font-bold text-gray-900">4.9 / 5.0</span>
+              <span className="text-xs text-gray-400 font-medium">· 1,240+ verified clinical reviews</span>
             </div>
+          </div>
 
-            {/* Author */}
-            <div className="flex items-center justify-between border-t border-gray-50 pt-6">
-              <div className="flex items-center gap-3.5">
-                <img 
-                  src={testimonials[activeTestimonial].image} 
-                  alt={testimonials[activeTestimonial].user} 
-                  className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
-                />
-                <div className="flex flex-col">
-                  <span className="font-bold text-gray-900 text-sm">
-                    {testimonials[activeTestimonial].user}
+          {/* Right Column: Luxury Testimonial Showcase Card */}
+          <div className="lg:col-span-7 w-full">
+            <div className="bg-white rounded-[32px] p-8 sm:p-12 border border-gray-200/80 shadow-xl shadow-purple-900/5 relative flex flex-col justify-between min-h-[440px]">
+              
+              {/* Top Row: Quote Icon & Navigation Buttons */}
+              <div className="flex items-center justify-between mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-purple-50 text-[#7E22CE] flex items-center justify-center">
+                  <Quote className="w-6 h-6 fill-[#7E22CE]/20 stroke-[#7E22CE]" />
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={prevTestimonial}
+                    className="w-10 h-10 rounded-full border border-gray-200 hover:border-purple-300 hover:bg-purple-50 text-gray-600 hover:text-[#7E22CE] flex items-center justify-center transition-all cursor-pointer"
+                    aria-label="Previous testimonial"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={nextTestimonial}
+                    className="w-10 h-10 rounded-full border border-gray-200 hover:border-purple-300 hover:bg-purple-50 text-gray-600 hover:text-[#7E22CE] flex items-center justify-center transition-all cursor-pointer"
+                    aria-label="Next testimonial"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Middle: Testimonial Quote */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#7E22CE] bg-purple-50 px-3 py-1 rounded-full border border-purple-100">
+                    Target: {current.concern}
                   </span>
-                  <span className="text-xs text-[#C084FC] font-semibold mt-0.5">
-                    {testimonials[activeTestimonial].role}
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>{current.metric}</span>
+                  </div>
+                </div>
+
+                <p className="text-lg sm:text-xl md:text-2xl font-light text-gray-800 leading-relaxed italic">
+                  "{current.quote}"
+                </p>
+              </div>
+
+              {/* Bottom: User Info & Routine Tags */}
+              <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={current.image}
+                    alt={current.user}
+                    className="w-13 h-13 rounded-full object-cover border-2 border-purple-200 shadow-sm"
+                  />
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-gray-900 text-sm sm:text-base">
+                        {current.user}
+                      </span>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-50" />
+                    </div>
+                    <span className="text-xs text-gray-500 font-medium block">
+                      {current.role}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Routine Tag */}
+                <div className="text-left sm:text-right">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-0.5">
+                    Personalized Routine
+                  </span>
+                  <span className="text-xs font-semibold text-gray-700">
+                    {current.routine}
                   </span>
                 </div>
               </div>
 
-              {/* Slider dots */}
-              <div className="flex gap-2 shrink-0">
+              {/* Indicator Dots */}
+              <div className="flex gap-2 justify-center mt-8">
                 {testimonials.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveTestimonial(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeTestimonial === idx ? "bg-[#C084FC] w-6" : "bg-gray-200"
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                      activeTestimonial === idx ? "bg-[#7E22CE] w-8" : "bg-gray-200 w-2 hover:bg-gray-300"
                     }`}
-                    aria-label={`Testimonial slide ${idx + 1}`}
-                  ></button>
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
                 ))}
               </div>
+
             </div>
           </div>
+
         </div>
 
       </div>

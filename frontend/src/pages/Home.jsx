@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import girlVideo from "../assets/girl.mp4";
 import Nav from "../components/Nav";
 import FeaturedIn from "../components/FeaturedIn";
@@ -88,9 +89,13 @@ export function Hero() {
             Our AI scans your face and shows what can be improved
           </p>
 
-          <a href="/analysis" className="bg-[#F3E8FF] text-[#5B21B6] font-semibold text-[15px] px-8 py-4 rounded-xl hover:bg-[#EDE9FE] transition-colors no-underline">
-            Analyze Skin
-          </a>
+          <Link 
+            to="/analysis" 
+            className="bg-[#F3E8FF] hover:bg-[#EDE9FE] text-[#5B21B6] font-bold text-[15px] px-9 py-4 rounded-2xl shadow-sm hover:shadow-md hover:shadow-purple-500/10 active:scale-95 transition-all no-underline inline-flex items-center gap-2"
+          >
+            <span>Analyze Skin</span>
+            <span className="text-sm">✨</span>
+          </Link>
         </div>
 
         {/* Center: empty spacer for desktop */}
